@@ -1,0 +1,46 @@
+.playIcon {
+  font-size: 4rem;
+}
+
+.playBtn button {
+  z-index: 2;
+}
+
+.playBtn:before {
+  content: "";
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  padding: 3rem;
+  background: rgba(0, 0, 0, 0.584);
+  position: absolute;
+  z-index: 1;
+}
+
+input[type="password"]::placeholder {
+  font-size: 6rem;
+  letter-spacing: 0;
+  color: grey;
+}
+
+@media screen and (max-width: 500px) {
+  .OtherOptions {
+    flex-direction: column !important;
+  }
+
+  .playIcon {
+    font-size: 2.6rem;
+  }
+
+  .playBtn:before {
+    width: 3rem !important;
+    height: 3rem !important;
+    padding: 2rem;
+  }
+
+  input[type="password"]::placeholder {
+    font-size: 3.5rem;
+    letter-spacing: 0;
+    color: grey;
+  }
+}
