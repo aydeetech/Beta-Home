@@ -79,7 +79,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="vh-100 overflow-y-hidden">
+    <div className="vh-100 overflow-y-hidden" style={{maxWidth: "1500px", margin: "auto"}}>
       <ToastContainer />
       <div className={isDark ? "DarkMode" : null}>
         <div className="col-12 d-flex justify-content-between m-auto ">

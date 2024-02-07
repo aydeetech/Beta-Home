@@ -49,7 +49,7 @@ const Login = () => {
     }
   }
   return (
-    <div className={isDark ? "DarkMode" : null}>
+    <div className={isDark ? "DarkMode" : null} style={{maxWidth: "1500px", margin: "auto"}}>
       <div className=" vh-100 overflow-y-hidden d-flex justify-content-center w-100">
         <ToastContainer />
         <div className="col-md-6 d-flex justify-content-center align-items-center">

@@ -1,7 +1,8 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { properties } from "./mockData/properties";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { FaLongArrowAltLeft } from "react-icons/fa";
+import axios from "axios";
 
 export const AppContext = createContext();
 
@@ -42,7 +43,34 @@ const AppProvider = ({ children }) => {
 
   
 
+  
+
   const Base_Url = "https://ayobetahomeapi.onrender.com/api/v1"
+  const [location, setLocation] = useState("")
+  const [type, setType] = useState("")
+  const [isLoading, setisLoading] = useState("")
+  const [bed, setBed] = useState('')
+  const [properties, setProperties] = useState([])
+
+  const url = `${Base_Url}/property?location=${location}&type=${type}&bedroom=${bed}`
+
+
+  const getProperties = async () => {
+        try {
+          setisLoading(true)
+          const {data} = await axios(url)
+          setProperties(data.properties)
+          setisLoading(false)
+          // setBed("")
+        } catch (error) {
+          console.log(error);
+        }
+  }
+
+  useEffect(()=> {
+    getProperties()
+  }, [location, type, bed])
+
 
   return (
     <AppContext.Provider
@@ -54,7 +82,11 @@ const AppProvider = ({ children }) => {
         isDark,
         setIsDark,
         setLightMode,
-        Base_Url
+        Base_Url,
+        setLocation,
+        setType,
+        setBed,
+        isLoading
       }}
     >
       {children}

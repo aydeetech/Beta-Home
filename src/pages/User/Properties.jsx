@@ -3,6 +3,7 @@ import UserPropertyHeroSection from "../../components/User components/Properties
 import UserPropertyCardComponent from "../../components/User components/PropertiesSubComponents/UserPropertyCardComponent";
 import UserPropertyDiscover from "../../components/User components/PropertiesSubComponents/UserPropertyDiscover";
 import UserFooter from "../../components/User components/UserFooter";
+import UserDiscover from "../../components/User components/HomeSubComponents/UserDiscover"
 import { useGlobalContext } from "../../Hooks/useGlobalContext";
 import { useEffect } from "react";
 
@@ -19,7 +20,7 @@ const Properties = () => {
       <UserNavbar />
       <UserPropertyHeroSection />
       <UserPropertyCardComponent />
-      <UserPropertyDiscover />
+      <UserDiscover />
       <UserFooter />
     </div>
   );

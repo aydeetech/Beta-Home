@@ -44,7 +44,7 @@ const UserNewsValidation = () => {
   return (
     <div className="user-newsletter">
       <div className="user-news-sec">
-        <h3 className="">Sign to Our Newsletter</h3>
+        <h3 className="">Sign Up to Our Newsletter</h3>
         <p className="">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
           eiusmod tempor incididunt ut labore et dolore gna a. eiusmod tempor

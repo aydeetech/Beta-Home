@@ -13,7 +13,7 @@ const Inspection = () => {
     });
   }, []);
   return (
-    <div className={isDark ? "DarkMode" : null}>
+    <div className={isDark ? "DarkMode" : null} style={{maxWidth: "1500px", margin: "auto"}}>
       <UserNavbar />
       <UserInspectionPage />
       <UserFooter />

@@ -2,15 +2,16 @@ import React from "react";
 import ContactImg from "../../../assets/images/contactImg.png"
 import { GoArrowUpRight } from "react-icons/go";
 
-const UserPropertyDetailForm = () => {
+const UserPropertyDetailForm = ({property}) => {
+    
   return <div>
-            <p className="fw-bold fs-4">Contact Evelyn Peters</p>
+            <p className="fw-bold fs-4">Contact {property.salesSupport.name}</p>
 
             <div className="d-flex align-items-center gap-2 ">
-                <img src= {ContactImg} alt="contact-img" className="rounded rounded-circle " />
+                <img src= {property.salesSupport.avatar} alt="contact-img" className=" usercontact-img rounded rounded-circle " />
                 <div>
-                    <p className="fw-bold lh-1">Evelyn Peters</p>
-                    <p className="lh-1">(+234)123-555-*** <button className="btn bg-success text-white">Show</button></p>
+                    <p className="fw-bold lh-1">{property.salesSupport.name}</p>
+                    <p className="lh-1">{property.salesSupport.phoneNumber} <button className="btn bg-success text-white">Show</button></p>
                     <p className="lh-1">adura@bh.com</p>
                 </div>
             </div>

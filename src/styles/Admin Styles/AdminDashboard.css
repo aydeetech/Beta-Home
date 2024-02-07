@@ -80,6 +80,8 @@
 
 .AdminDashboard-images img {
   width: 250px;
+  height: 268px;
+  object-fit: cover;
   border-radius: 0.94656rem;
 }
 

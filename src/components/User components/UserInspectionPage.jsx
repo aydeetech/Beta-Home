@@ -42,6 +42,16 @@ const Inspection = () => {
       if (data.success) {
         toast.success("Inspection submitted successfully")
         setClicked(false)
+        setInspection({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phoneNumber: "",
+          location: "",
+          inspectionDate: "",
+          inspectionTime: "",
+          message: "",
+        })
       }
       
     } catch (error) {

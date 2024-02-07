@@ -1,5 +1,21 @@
+.avatar {
+  width: 114px;
+  height: 114px;
+  border-radius: 100%;
+  object-fit: cover;
+}
 .playIcon {
   font-size: 4rem;
+}
+
+.OtherOptions div:first-child {
+  width: 327px !important;
+  height: 458px;
+}
+
+.OtherOptions div:last-child {
+  width: 327px !important;
+  height: 327px;
 }
 
 .playBtn button {
@@ -23,9 +39,38 @@ input[type="password"]::placeholder {
   color: grey;
 }
 
+.AdminPdetails {
+  width: 73% !important;
+}
+
+@media screen and (max-width: 1280px) {
+  .OtherOptions div:first-child {
+    width: 100% !important;
+    height: 330px;
+  }
+  .AdminPdetails {
+    width: 100% !important;
+  }
+  
+  .OtherOptions div:last-child {
+    width: 100% !important;
+    height: 327px;
+  }
+}
+
 @media screen and (max-width: 500px) {
   .OtherOptions {
     flex-direction: column !important;
+  }
+
+  .OtherOptions div:first-child {
+    width: 100% !important;
+    height: 458px;
+  }
+  
+  .OtherOptions div:last-child {
+    width: 100%  !important;
+    height: 327px;
   }
 
   .playIcon {
@@ -42,5 +87,17 @@ input[type="password"]::placeholder {
     font-size: 3.5rem;
     letter-spacing: 0;
     color: grey;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .OtherOptions div:first-child {
+    width: 280px !important;
+    height: 458px;
+  }
+  
+  .OtherOptions div:last-child {
+    width: 280px !important;
+    height: 327px;
   }
 }

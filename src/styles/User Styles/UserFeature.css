@@ -42,9 +42,8 @@
 .card-title {
   color: #444444;
   margin-bottom: 8px;
-  /* margin-right: 120px;
-    margin-top: 20px; */
-  padding-left: 15px;
+  margin-right: 0 !important;
+  padding-left: 10px;
   font-family: "Exo 2" sans-serif;
   font-weight: 600;
   font-size: 1rem;
@@ -138,8 +137,8 @@
 
 .card {
   width: 392.74px;
+  
 }
-
 @media screen and (max-width: 768px) {
   .UserPropertiesCard-Container  h2 {
     font-size: 1.6rem;

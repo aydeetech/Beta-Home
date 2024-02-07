@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../../styles/User Styles/UserPropertyDetails.css";
 import PropdetailImgExtra from "../../../assets/images/propDetailExtra.png";
 import MapImg from "../../../assets/images/map.png";
 import { useParams } from "react-router-dom";
 import { useGlobalContext } from "../../../Hooks/useGlobalContext";
+import { formatPrice } from "../../../utils/helpers";
 
 // Head
 import { FaHeart, FaShower } from "react-icons/fa";
@@ -25,23 +26,42 @@ import { FaWhatsappSquare } from "react-icons/fa";
 import UserPropertyDetailForm from "./UserPropertyDetailForm";
 import UserPropertyDetailsRelated from "./UserPropertyDetailsRelated";
 import UserShare from "../../UserShare";
+import Loading from "../../Loading";
+import axios from "axios";
 
 const UserPropertyDetails = () => {
   const [liked, setliked] = useState(false);
   const [share, setShare] = useState(false);
   const { propertyId } = useParams();
-  const { properties } = useGlobalContext();
+  const {  Base_Url } = useGlobalContext();
 
-  const currentProperty = properties.find((p) => p._id === Number(propertyId));
+  const [isLoading, setIsLoading] = useState(true);
+  const [property, setProperty] = useState({})
+  const [similar, setSimilar] = useState([])
+  const url  = `${Base_Url}/property/${propertyId}`
 
-  const {
-    image,
-    title,
-    price,
-    location,
-    type,
-    features: { bathroom, bedroom, garage, squareFeet },
-  } = currentProperty;
+
+  const getProperty = async () => {
+    try {
+      const {data} = await axios(url)
+      console.log(data);
+      setProperty(data.property)
+      setSimilar(data.similarProperties)
+      setIsLoading(false)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    window.scroll({
+      top: 0,
+      behavior: "smooth"
+    })
+    getProperty()
+  },[propertyId])
+
+  
 
   const handleLiked = () => {
     setliked(!liked);
@@ -50,24 +70,32 @@ const UserPropertyDetails = () => {
     setShare(!share);
   };
 
+  if (isLoading) {
+    return <Loading />
+  }
+
+  const createdAt = Date.parse(property.createdAt) - Date.now()
+  console.log(createdAt);
+  // (Math.floor((date / (1000 * 60)) % 60))
+
   return (
     <div>
       <div className="UserPropertyDetailsContainer overflow-x-hidden container w-100 py-5">
         <div className="UserPropertyDetailsWrapper w-100 ">
           <div className="d-flex justify-content-between">
             <div>
-              <h2 className="fs fs-3">{title}</h2>
-              <p>{location}</p>
+              <h2 className="fs fs-3">{property.title}</h2>
+              <p>{property.location}</p>
               <div className="d-flex  gap-lg-3 gap-2 flex-wrap  align-items-center  ">
-                <p className="text-danger">
+               {property.propertyStatus === "available" && <p className="text-danger">
                   <GoDotFill />
                   For Sale
-                </p>
+                </p>}
                 <p>
                   <GoClock /> 7 Months Ago
                 </p>
                 <p>
-                  <PiArrowSquareUpRight /> {squareFeet} sqft
+                  <PiArrowSquareUpRight /> {property.squareFeet} sqft
                 </p>
               </div>
             </div>
@@ -86,7 +114,7 @@ const UserPropertyDetails = () => {
                   <button className="rounded border-0" onClick={handleShare}>
                     <FiShare2 className="border p-2 fs-2 rounded" />
                   </button>
-                  {share ? <UserShare title={title} /> : null}
+                  {share ? <UserShare title={property.title} /> : null}
                 </div>
                 <button className="border bg-white rounded">
                   <TfiPrinter
@@ -97,7 +125,7 @@ const UserPropertyDetails = () => {
               </div>
 
               <p className="fw-bold UserPropertyDetPrice">
-                <span className="naira">N</span> {price}
+                {formatPrice(property.price)}
               </p>
             </div>
           </div>
@@ -105,15 +133,15 @@ const UserPropertyDetails = () => {
           <div className="UserPropertyDetailsImages w-100 d-flex flex-lg-row flex-column gap-3 ">
             <div className="main flex-grow-1 ">
               <img
-                src={image}
+                src={property.media.images[0]}
                 alt="propertydetail Image"
                 className="w-100 h-100 object-fit-cover  "
               />
             </div>
 
-            <div className="UserPropertyDetailsExtraImg d-md-flex d-none flex-lg-column flex-md-row gap-2 h-100 position-relative  ">
-              <img src={PropdetailImgExtra} alt="" className="flex-grow-1 " />
-              <img src={PropdetailImgExtra} alt="" className="flex-grow-1 " />
+            <div className="UserPropertyDetailsExtraImg d-md-flex d-none flex-lg-column flex-md-row gap-2 h-100 position-relative">
+              <img src={property.media.images[1]} alt="" className="flex-grow-1 object-fit-cover " />
+              <img src={property.media.images[2]} alt="" className="flex-grow-1 object-fit-cover " />
             </div>
           </div>
 
@@ -127,14 +155,14 @@ const UserPropertyDetails = () => {
                     <LiaBedSolid className="p-2 fs-1 border rounded" />
                     <p className="d-flex flex-column ">
                       <span className="fw-bold">Bed</span>
-                      <span>{bedroom}</span>
+                      <span>{property.bedroom}</span>
                     </p>
                   </div>
                   <div className="d-flex gap-2">
                     <FaShower className="p-2 fs-1 border rounded" />
                     <p className="d-flex flex-column ">
                       <span className="fw-bold">Baths</span>
-                      <span>{bathroom}</span>
+                      <span>{property.bathroom}</span>
                     </p>
                   </div>
                   <div className="d-flex gap-2">
@@ -148,21 +176,21 @@ const UserPropertyDetails = () => {
                     <PiGarageDuotone className="p-2 fs-1 border rounded" />
                     <p className="d-flex flex-column ">
                       <span className="fw-bold">Garages</span>
-                      <span>{garage}</span>
+                      <span>{property.garage}</span>
                     </p>
                   </div>
                   <div className="d-flex gap-2">
                     <PiArrowSquareUpRight className="p-2 fs-1 border rounded" />
                     <p className="d-flex flex-column ">
                       <span className="fw-bold">Lot area (sqft)</span>
-                      <span> {squareFeet}</span>
+                      <span> {property.squareFeet}</span>
                     </p>
                   </div>
                   <div className="d-flex gap-2">
                     <PiHouseSimpleBold className="p-2 fs-1 border rounded" />
                     <p className="d-flex flex-column ">
                       <span className="fw-bold">Type</span>
-                      <span>{type}</span>
+                      <span>{property.propertyType}</span>
                     </p>
                   </div>
                 </div>
@@ -172,22 +200,7 @@ const UserPropertyDetails = () => {
                 <h3>Overview</h3>
 
                 <p className="mt-3 lh-lg">
-                  Welcome to the Comfortable Villa Green located at 178
-                  Broadway, Brooklyn. This charming bungalow presents an
-                  exceptional opportunity for those seeking a tranquil and
-                  stylish retreat in the heart of the city. Nestled amidst the
-                  vibrant neighborhood of Brooklyn, this bungalow offers the
-                  perfect blend of modern convenience and classic charm. The
-                  exterior features a picturesque design with a cozy porch,
-                  where you can enjoy your morning coffee while taking in the
-                  sights and sounds of the surrounding greenery. Step inside to
-                  discover a thoughtfully designed interior that boasts an
-                  abundance of natural light and a seamless flow between living
-                  spaces. The open-concept layout creates an inviting
-                  atmosphere, perfect for both relaxing evenings and
-                  entertaining guests. The living room is adorned with large
-                  windows that frame views of the lush garden, providing a sense
-                  of serenity within the bustling city.
+                  {property.description}
                 </p>
               </div>
 
@@ -195,13 +208,13 @@ const UserPropertyDetails = () => {
                 <div className="d-flex gap-4  justify-content-between ">
                   <h3>Location</h3>
 
-                  <p>{location}</p>
+                  <p>{property.location}</p>
                 </div>
 
                 <img src={MapImg} alt="" className="rounded mt-3 w-100" />
               </div>
 
-              <div className="UserPropertyDetailsFeatures shadow-sm rounded p-2 mt-5  ">
+              {property.propertyType === "house" && <div className="UserPropertyDetailsFeatures shadow-sm rounded p-2 mt-5  ">
                 <h3 className="p-2">Features</h3>
 
                 <ul className="d-grid border border-white p-4 rounded-3 gap-1">
@@ -216,16 +229,16 @@ const UserPropertyDetails = () => {
                   <li>TV Cable</li>
                   <li>Washer</li>
                 </ul>
-              </div>
+              </div>}
             </div>
 
             <div className="UserPropertyDetailsFormWrapper mt-5 p-2 shadow-sm align-self-start rounded">
-              <UserPropertyDetailForm />
+              <UserPropertyDetailForm property={property}/>
             </div>
           </div>
 
           <div className="mt-5">
-            <UserPropertyDetailsRelated />
+            <UserPropertyDetailsRelated similar={similar}/>
           </div>
         </div>
       </div>

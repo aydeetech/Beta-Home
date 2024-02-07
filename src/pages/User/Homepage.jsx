@@ -10,7 +10,7 @@ import UserNavbar from "../../components/User components/UserNavbar";
 
 const Homepage = () => {
   const {isDark} = useGlobalContext()
-  return <div className={isDark ? "DarkMode" : null}>
+  return <div className={isDark ? "DarkMode" : null} style={{maxWidth: "1500px", margin: "auto"}}>
     <UserNavbar />
     <UserHeroSection />
     <UserDiscover />

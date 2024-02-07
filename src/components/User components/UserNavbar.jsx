@@ -32,8 +32,8 @@ const UserNavbar = () => {
         location.pathname === `/properties/${propertyId}` ||
         location.pathname === "/inspection" ||
         location.pathname === "/*"
-          ? "bg-success w-100 "
-          : "bg-transparent UserNavTransparent z-2 position-absolute top-0 w-100"
+          ? "bg-success w-100 position-relative "
+          : "bg-transparent UserNavTransparent z-2 position-absolute top-0 w-100 "
       }
     >
       <div

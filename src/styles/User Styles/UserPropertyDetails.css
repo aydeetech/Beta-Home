@@ -12,7 +12,19 @@
   right: 1rem;
 }
 .UserPropertyDetailsExtraImg img {
-  height: 50vh;
+  height: 298px;
+}
+
+.UserPropertyDetailsImages {
+  height: 619px !important;
+}
+
+.UserPropertyDetailsImages div:first-child {
+  width: 75%;
+}
+
+.UserPropertyDetailsImages div:last-child {
+  width: 25%;
 }
 .UserPropertyDetailList {
   grid-template-columns: repeat(3, 1fr);
@@ -43,9 +55,13 @@
 .UserPropertyDetailsOverview p {
   text-align: justify;
 }
-
-.UserPropertyRelatedCard {
-  width: 24.54625rem;
+.UserPropertyRelated {
+  width: 392.48px !important;
+}
+.UserPropertyRelated img {
+  width: 100%;
+  height: 294.36px !important;
+  object-fit: cover;
 }
 
 .UserPropDetBottom {
@@ -58,10 +74,33 @@ form text-area {
   outline: 2px solid var(--primaryGreen) !important;
 }
 
+.usercontact-img {
+  width: 100px !important;
+  height: 100px !important;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
 @media screen and (max-width: 900px) {
   .UserPropertyDetailsInfo,
   .UserPropertyDetailsFormWrapper {
     width: 100%;
+  }
+
+  .UserPropertyDetailsImages {
+    height: 100% !important;
+  }
+
+  .UserPropertyDetailsImages div:first-child {
+    width: 100%;
+  }
+
+  .UserPropertyDetailsImages div:last-child {
+    width: 100%;
+  }
+
+  .UserPropertyDetailsImages div:last-child img {
+    width: 50%;
   }
 }
 
@@ -86,5 +125,9 @@ form text-area {
 @media screen and (max-width: 345px) {
   .UserPropertyDetailsFeatures ul {
     grid-template-columns: repeat(1, 1fr);
+  }
+
+  .UserPropertyRelated {
+    width: 320px !important;
   }
 }

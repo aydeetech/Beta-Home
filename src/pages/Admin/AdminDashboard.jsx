@@ -10,9 +10,31 @@ import { LuBath } from "react-icons/lu";
 import { GiHomeGarage } from "react-icons/gi";
 import { LuRectangleHorizontal } from "react-icons/lu";
 import { IoHomeOutline } from "react-icons/io5";
+import { useGlobalContext } from "../../Hooks/useGlobalContext";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import Loading from "../../components/Loading";
+import { formatPrice } from "../../utils/helpers";
 
 const AdminDashboard = () => {
-  const houses = properties.slice(0, 3);
+  // const houses = properties.slice(0, 3)
+  const { Base_Url } = useGlobalContext();
+  const [recentproperties, setRecentProperties] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const getRecentProperties = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await axios(`${Base_Url}/property/recent`);
+      setRecentProperties(data.properties);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getRecentProperties();
+  }, []);
   return (
     <div className="pb-5">
       <AdminLayout>
@@ -28,68 +50,76 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="Recently-added-props">
+        <div className="Recently-added-props mt-3">
           <h2>Recently added properties</h2>
           <h6 className="view-all">view all properties</h6>
         </div>
 
         <div className="AdminDashProperties">
-          {houses.map((h, i) => {
-            return (
-              <div key={h._id} className="AdminDashboard-images">
-                <img src={h.image} alt={h.title} />
-                <p className="posted-on"> posted on{h.createdAt}</p>
-                <div className="networkFamily">
-                  <p className="network">
+          {isLoading ? (
+            <Loading />
+          ) : (
+            recentproperties.map((h, i) => {
+              return (
+                <div key={h._id} className="AdminDashboard-images">
+                  <img src={h.media.images[0]} alt={h.title} />
+                  <p className="posted-on">
                     {" "}
-                    <FaNetworkWired /> {h.tags[0]}{" "}
-                  </p>{" "}
-                  <p className="family">
-                    {" "}
-                    <MdFamilyRestroom /> {h.tags[1]}
+                    posted on{new Date(h.createdAt).toLocaleDateString()}
                   </p>
+                  <div className="networkFamily">
+                    <p className="network">
+                      {" "}
+                      <FaNetworkWired /> {h.tags}{" "}
+                    </p>{" "}
+                    <p className="family">
+                      {" "}
+                      <MdFamilyRestroom /> {h.tags}
+                    </p>
+                  </div>
+                  <h2>{h.title}</h2>
+
+                  <p className="location">
+                    {" "}
+                    <IoLocationSharp />
+                    {h.location}
+                  </p>
+
+                  <h3 className="price">{formatPrice(h.price)}</h3>
+
+                  <p className="spaces">
+                    <p>
+                      {" "}
+                      <MdOutlineBedroomParent />
+                      {h.bedroom} Bedroom
+                    </p>
+
+                    <p>
+                      {" "}
+                      <LuBath />
+                      {h.bathroom} Bathroom
+                    </p>
+                    {h.garage && (
+                      <p>
+                        {" "}
+                        <GiHomeGarage /> Garage
+                      </p>
+                    )}
+                    <p>
+                      {" "}
+                      <LuRectangleHorizontal />
+                      {h.squareFeet} Squarefeet
+                    </p>
+                  </p>
+                  <div>
+                    <Link to={`/admin/properties/${h._id}`}>
+                      <button className="AdminDashBtn">View</button>
+                    </Link>
+                  </div>
                 </div>
-                <h2>Residential Land</h2>
-
-                <p className="location">
-                  {" "}
-                  <IoLocationSharp />
-                  3,{h.location} 100245
-                </p>
-
-                <h3 className="price">${h.price}</h3>
-
-                <p className="spaces">
-                  <p>
-                    {" "}
-                    <MdOutlineBedroomParent />
-                    {h.features.bedroom} Bedroom
-                  </p>
-
-                  <p>
-                    {" "}
-                    <LuBath />
-                    {h.features.bathroom} Bathroom
-                  </p>
-                  <p>
-                    {" "}
-                    <GiHomeGarage />
-                    {h.features.garage} Garage
-                  </p>
-                  <p>
-                    {" "}
-                    <LuRectangleHorizontal />
-                    {h.features.squareFeet} Squarefeet
-                  </p>
-                </p>
-                <div>
-                  <Link to={`/admin/properties/${h._id}`}>
-                    <button className="AdminDashBtn">View</button>
-                  </Link>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </AdminLayout>
     </div>
