@@ -14,9 +14,11 @@ import { AiFillPicture } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Loading from "../../Loading";
 import {formatPrice} from "../../../utils/helpers"
+import { FiRefreshCcw } from "react-icons/fi";
 
 const UserPropertyCardComponent = () => {
-  const { properties, isLoading,location, setLocation, type, setType, setBed } = useGlobalContext();
+  const { properties, isLoading, updatePrice, price, clearFilters} = useGlobalContext();
+  const [spec,setSpec] = useState('')
 
   if (isLoading) {
     return <Loading />;
@@ -31,7 +33,11 @@ const UserPropertyCardComponent = () => {
 
       <div className="UserPropertiesFilter container ">
         <div className="UserPropertiesFilter1">
+        
           <p className="UserPropertiesFilter-p">
+          <button  onClick={clearFilters} className="btn btn-sm btn-outline-success me-2">
+              <FiRefreshCcw />
+          </button>
             <LuSettings2 className="lg-4 " />Filter
           </p>
           <p className="UserPropertiesFilter-p ps-2">
@@ -41,12 +47,13 @@ const UserPropertyCardComponent = () => {
         </div>
         <div className="UserPropertiesFilter2 d-flex align-items-center justify-content-center ">
           <p className="UserPropertiesFilter-p">Sort by:</p>
-
-          <select name="" id="" className="bg-white border-0 p-0 mb-3 default">
+      <form>
+          <select value={price} onChange={updatePrice}  name="" id="" className="bg-white border-0 p-0 mb-3 default">
             <option value="Default">Default </option>
-            <option value="Duplex">Price(Lowest-Highest)</option>
-            <option value="Duplex">Price(Highest-Lowest)</option>
+            <option value="price">Price(Lowest-Highest)</option>
+            <option value="-price">Price(Highest-Lowest)</option>
           </select>
+      </form>
         </div>
       </div>
 
