@@ -26,7 +26,7 @@ const AdminNavbar = () => {
             {area.pathname === "/admin/properties" ? <form className="headerSearchWrapper d-flex align-items-center" onSubmit={handleSearch}>
               <input type="text" placeholder="Search Here" value={search} onChange={(e) => setSearch(e.target.value) } />
               <IoSearch className="headerSearchIcon" />
-            </form> : <h1 className="text-success display-6">Welcome Boss</h1>}
+            </form> : <h1 className="text-success display-6">Welcome Admin</h1>}
           </div>
         </div>
 

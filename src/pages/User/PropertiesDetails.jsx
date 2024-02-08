@@ -6,7 +6,7 @@ import { useGlobalContext } from "../../Hooks/useGlobalContext";
 
 const PropertiesDetails = () => {
   const {isDark} = useGlobalContext()
-  return <div className={isDark ? "w-100 DarkMode" : "w-100"} style={{maxWidth: "1500px", margin: "auto"}}>
+  return <div className={isDark ? "w-100 DarkMode" : "w-100"}>
     <UserNavbar />
     <UserPropertyDetails />
     <UserFooter />
