@@ -128,9 +128,9 @@ const UserDiscover = () => {
             {discover.map((dis)=>{
                 const {_id, media: {images}, title, location, price, squareFeet, bedroom, bathroom} = dis ;
                 return<div className="cards"  key={_id}>
-                         <Link to={`/properties/${_id}`}>
+                     
                          <img src={images[0]} alt={title} className='object-fit-cover' />
-                         </Link> 
+                       
                          <div className='card-bottom'>
                              <h4>{title}</h4>
                              <h4>{formatPrice(price)}</h4>
