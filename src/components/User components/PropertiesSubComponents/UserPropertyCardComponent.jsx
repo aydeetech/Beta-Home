@@ -32,7 +32,7 @@ const UserPropertyCardComponent = () => {
       {/* Filter/Drop-down */}
 
       <div className="UserPropertiesFilter container ">
-        <div className="UserPropertiesFilter1">
+        <div className="UserPropertiesFilter1 ">
         
           <p className="UserPropertiesFilter-p">
           <button  onClick={clearFilters} className="btn btn-sm btn-outline-success me-2">

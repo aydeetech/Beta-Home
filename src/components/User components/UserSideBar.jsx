@@ -6,7 +6,13 @@ import { useGlobalContext } from '../../Hooks/useGlobalContext';
 
 const UserSideBar = ({sidebar}) => {
   const location = useLocation()
+  const redirect = useNavigate()
   const {isDark, setLightMode} = useGlobalContext()
+  const token = localStorage.getItem("token");
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    redirect("/")
+  }
 
   return (
    
@@ -38,8 +44,9 @@ const UserSideBar = ({sidebar}) => {
           </ul>
           <hr />
           
+            {token ?  <div><button className="btn btn-danger" onClick={handleLogOut}>Log Out</button></div> : <div>
             <Link to="/signup">
-              <button className=" btn border bg-success  text-white px-5 py-2">
+              <button className=" btn border bg-success mb-2  text-white px-5 py-2">
                 Sign Up
               </button>
             </Link>
@@ -48,7 +55,7 @@ const UserSideBar = ({sidebar}) => {
                 Log In
               </button>
             </Link>
-        
+            </div>}
         {/* </Navbar.Collapse> */}
         {/* </Container> */}
       </div>
